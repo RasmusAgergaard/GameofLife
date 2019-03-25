@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameofLife
+namespace GOL.UI
 {
 #if WINDOWS || LINUX
     /// <summary>
