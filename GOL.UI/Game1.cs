@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using GOL.BL;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,6 +15,8 @@ namespace GOL.UI
         CellHandler cellHandler = new CellHandler();
 
         Grid grid = new Grid(100, 100);
+
+        public int globalCounter = 0;
 
         //Textures
         Texture2D spriteCellAlive;
@@ -50,7 +53,15 @@ namespace GOL.UI
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            grid = cellHandler.UpdateCells(grid);
+            if (globalCounter >= 6)
+            {
+                //Update grid
+                grid = cellHandler.UpdateCells(grid);
+
+                globalCounter = 0;
+            }
+
+            globalCounter += 1;
 
             base.Update(gameTime);
         }

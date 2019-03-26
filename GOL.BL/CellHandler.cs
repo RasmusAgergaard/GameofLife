@@ -12,51 +12,76 @@ namespace GOL.BL
 
         public Grid UpdateCells(Grid grid)
         {
+            //Create new grid
+            var newGrid = new Grid(100, 100);
+
             for (int column = 0; column < grid.Columns; column++)
             {
                 for (int row = 0; row < grid.Rows; row++)
                 {
                     var neighbours = 0;
 
-                    //Count neighbours
-                    if (column > 1 && column < 99 && row > 1 && row < 99)
+                    if (column - 1 >= 0 && row - 1 >= 0)
                     {
                         if (grid.GridofCells[column - 1, row - 1].State == Cell.states.alive) { neighbours += 1; }
+                    }
+                    if (row - 1 >= 0)
+                    {
                         if (grid.GridofCells[column + 0, row - 1].State == Cell.states.alive) { neighbours += 1; }
+                    }
+                    if (column + 1 < grid.Columns && row - 1 >= 0)
+                    {
                         if (grid.GridofCells[column + 1, row - 1].State == Cell.states.alive) { neighbours += 1; }
-                        if (grid.GridofCells[column + 0, row + 0].State == Cell.states.alive) { neighbours += 1; }
+                    }
+                    if (column - 1 >= 0)
+                    {
+                        if (grid.GridofCells[column - 1, row + 0].State == Cell.states.alive) { neighbours += 1; }
+                    }
+                    if (column + 1 < grid.Columns)
+                    {
                         if (grid.GridofCells[column + 1, row + 0].State == Cell.states.alive) { neighbours += 1; }
+                    }
+                    if (column - 1 >= 0 && row + 1 < grid.Rows)
+                    {
                         if (grid.GridofCells[column - 1, row + 1].State == Cell.states.alive) { neighbours += 1; }
+                    }
+                    if (row + 1 < grid.Rows)
+                    {
                         if (grid.GridofCells[column + 0, row + 1].State == Cell.states.alive) { neighbours += 1; }
+                    }
+                    if (column + 1 < grid.Columns && row + 1 < grid.Rows)
+                    {
                         if (grid.GridofCells[column + 1, row + 1].State == Cell.states.alive) { neighbours += 1; }
                     }
 
-                    //Underpopulation 
-                    if (neighbours < 2 && grid.GridofCells[column, row].State == Cell.states.alive)
+
+                    //Underpopulation
+                    if (grid.GridofCells[column, row].State == Cell.states.alive && neighbours < 2)
                     {
-                        grid.GridofCells[column, row].State = Cell.states.dead;
+                        newGrid.GridofCells[column, row].State = Cell.states.dead;
+                    }
+
+                    //Next generation
+                    if (grid.GridofCells[column, row].State == Cell.states.alive && (neighbours == 2 || neighbours == 3))
+                    {
+                        newGrid.GridofCells[column, row].State = Cell.states.alive;
                     }
 
                     //Overpopulation
-                    if (neighbours > 3 && grid.GridofCells[column, row].State == Cell.states.alive)
+                    if (grid.GridofCells[column, row].State == Cell.states.alive && neighbours > 3)
                     {
-                        grid.GridofCells[column, row].State = Cell.states.dead;
+                        newGrid.GridofCells[column, row].State = Cell.states.dead;
                     }
 
                     //Reproduction
-                    if (neighbours == 3 && grid.GridofCells[column, row].State == Cell.states.dead)
+                    if (grid.GridofCells[column, row].State == Cell.states.dead && neighbours == 3)
                     {
-                        grid.GridofCells[column, row].State = Cell.states.alive;
+                        newGrid.GridofCells[column, row].State = Cell.states.alive;
                     }
-
                 }
             }
 
-            //var randomColumn = random.Next(grid.Columns);
-            //var randomRow = random.Next(grid.Rows);
-            //grid.GridofCells[randomColumn, randomRow].State = Cell.states.alive;
-
-            return grid;
+            return newGrid;
         }
     }
 }

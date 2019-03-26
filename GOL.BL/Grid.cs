@@ -20,7 +20,6 @@ namespace GOL.BL
             Columns = columns;
             Rows = rows;
             GridofCells = new Cell[Columns, Rows];
-
             PopulateStartGrid();
         }
 
@@ -35,20 +34,40 @@ namespace GOL.BL
             {
                 for (int row = 0; row < Rows; row++)
                 {
-                    var cellState = random.Next(2);
-
-                    if (cellState == 0)
-                    {
-                        GridofCells[column, row] = new Cell(Cell.states.dead);
-                    }
-                    else
-                    {
-                        GridofCells[column, row] = new Cell(Cell.states.alive);
-                    }
-
-                    
+                    GridofCells[column, row] = new Cell(Cell.states.dead);
                 }
             }
+
+            //Create Block
+            for (int column = 35; column < 65; column++)
+            {
+                for (int row = 35; row < 65; row++)
+                {
+                    GridofCells[column, row] = new Cell(Cell.states.alive);
+                }
+            }
+
+            //Hollow block
+            for (int column = 45; column < 55; column++)
+            {
+                for (int row = 45; row < 55; row++)
+                {
+                    GridofCells[column, row] = new Cell(Cell.states.dead);
+                }
+            }
+
+            //Create stuff
+            GridofCells[20, 19] = new Cell(Cell.states.alive);
+            GridofCells[19, 20] = new Cell(Cell.states.alive);
+            GridofCells[19, 21] = new Cell(Cell.states.alive);
+            GridofCells[20, 21] = new Cell(Cell.states.alive);
+            GridofCells[21, 21] = new Cell(Cell.states.alive);
+
+            GridofCells[80, 79] = new Cell(Cell.states.alive);
+            GridofCells[81, 80] = new Cell(Cell.states.alive);
+            GridofCells[79, 81] = new Cell(Cell.states.alive);
+            GridofCells[80, 81] = new Cell(Cell.states.alive);
+            GridofCells[81, 81] = new Cell(Cell.states.alive);
         }
     }
 }
