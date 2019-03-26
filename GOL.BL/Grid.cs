@@ -39,22 +39,22 @@ namespace GOL.BL
             }
 
             //Create Block
-            for (int column = 35; column < 65; column++)
+            for (int column = 50; column < 55; column++)
             {
-                for (int row = 35; row < 65; row++)
+                for (int row = 20; row < 80; row++)
                 {
                     GridofCells[column, row] = new Cell(Cell.states.alive);
                 }
             }
 
-            //Hollow block
-            for (int column = 45; column < 55; column++)
-            {
-                for (int row = 45; row < 55; row++)
-                {
-                    GridofCells[column, row] = new Cell(Cell.states.dead);
-                }
-            }
+            ////Hollow block
+            //for (int column = 45; column < 55; column++)
+            //{
+            //    for (int row = 45; row < 55; row++)
+            //    {
+            //        GridofCells[column, row] = new Cell(Cell.states.dead);
+            //    }
+            //}
 
             //Create stuff
             GridofCells[20, 19] = new Cell(Cell.states.alive);
